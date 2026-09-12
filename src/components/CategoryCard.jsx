@@ -1,6 +1,11 @@
 import { Link } from "react-router";
 
-export default function CategoryCard({ quizIcon, quizCategory }) {
+
+export default function CategoryCard({
+  quizIcon,
+  quizCategory,
+
+}) {
   return (
     <Link
       to={`/quizDetails/${quizCategory}`}

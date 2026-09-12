@@ -7,7 +7,7 @@ import App from "./App.jsx";
 import Home from "./pages/Home.jsx";
 import Quizzes from './pages/Quizzes.jsx';
 import QuizDetails from './pages/QuizDetails.jsx';
-import Quiz from './pages/Quiz.jsx';
+import QuizAttempt from "./pages/QuizAttempt.jsx";
 import Result from './pages/Result.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 
@@ -16,13 +16,13 @@ const router = createBrowserRouter([
     path: "/",
     Component: App,
     errorElement: <ErrorPage />,
-    children:[
-      {index:true,Component:Home},
-      {path:'/quizzes',Component:Quizzes},
-      {path:'/quizDetails/:quizCategory',Component:QuizDetails},
-      {path:'/quiz',Component:Quiz},
-      {path:'/result',Component:Result},
-    ]
+    children: [
+      { index: true, Component: Home },
+      { path: "/quizzes", Component: Quizzes },
+      { path: "/quizDetails/:quizCategory", Component: QuizDetails },
+      { path: "/QuizAttempt/:quizCategory", Component: QuizAttempt },
+      { path: "/result", Component: Result },
+    ],
   },
 ]);
 

@@ -1,7 +1,8 @@
 import React from 'react'
+import QuizInfo from '../components/QuizInfo'
 
 export default function QuizDetails() {
   return (
-    <div>This will be specific quiz details</div>
+    <QuizInfo />
   )
 }
