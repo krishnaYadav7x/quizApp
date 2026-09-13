@@ -1,21 +1,37 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router';
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router";
 import QuizHeader from "../components/QuizHeader";
 import QuizFooter from "../components/QuizFooter";
-import { Clock12Icon } from 'lucide-react';
-import { questions } from '../data.js/quizData';
+import { Clock12Icon } from "lucide-react";
+import { questions } from "../data.js/quizData";
+import { quizTimer } from "../data.js/quizTimer";
+import { QuizTimerContext } from "../contexts/TimerContext";
 
 export default function QuizAttempt() {
-  const {quizCategory}  = useParams()
-  const [index,setIndex] = useState(0)
+  const { quizCategory } = useParams();
+  const [index, setIndex] = useState(0);
+  const { startTimer, setStartTimer, handleStartTime } =
+    useContext(QuizTimerContext);
+  console.log(startTimer);
 
   const handleNextBtnClick = () => {
     setIndex((prev) => prev + 1);
+    handleStartTime();
   };
+
   const handlePreviousBtnClick = () => {
     setIndex((prev) => prev - 1);
+    handleStartTime();
   };
-  
+
+  useEffect(() => {
+    if (index === questions[quizCategory].length - 1) return;
+    if (startTimer === 0) {
+      setIndex((prev) => prev + 1);
+      handleStartTime();
+    }
+  }, [startTimer]);
+
   return (
     <div className="mx-auto flex min-h-screen max-w-[800px] flex-col bg-white">
       <QuizHeader title="Quiz" submit={true} />
@@ -33,13 +49,23 @@ export default function QuizAttempt() {
 
             <p className="flex items-center gap-1.5 text-sm font-semibold text-slate-600">
               <Clock12Icon size={18} />
-              <span>7:20</span>
+              <span>00:{startTimer ?? 10}</span>
             </p>
           </div>
 
           <div className="h-2.5 overflow-hidden rounded-full bg-slate-200">
-            <div className="h-full w-1/2 rounded-full bg-indigo-500 transition-all" />
+            <div
+              className={`h-full w-full origin-left bg-indigo-500 ${
+                startTimer === 10
+                  ? ""
+                  : "transition-transform duration-1000 ease-linear"
+              }`}
+              style={{
+                transform: `scaleX(${(10 - startTimer) / 10})`,
+              }}
+            />
           </div>
+
           <div className="inline-flex items-center gap-1 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1.5 text-sm font-semibold">
             <span className="text-indigo-600">{index + 1}</span>
             <span className="text-slate-400">/</span>

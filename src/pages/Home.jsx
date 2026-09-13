@@ -21,7 +21,7 @@ export default function Home() {
 
       <main className="flex min-h-[70vh] flex-col items-center justify-center space-y-8">
         <h2>Test your knowledge</h2>
-        <p>Challenge yourself. Test your knowledge.</p>
+        <p>Challenge yourself.</p>
         <Link
           to={"/quizzes"}
           className="cursor-pointer rounded-lg bg-indigo-500 px-7 py-3 font-semibold hover:bg-indigo-600"

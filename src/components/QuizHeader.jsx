@@ -1,14 +1,20 @@
 import { ArrowLeft } from 'lucide-react'
-import React from 'react'
+import React, { useContext } from 'react'
+import TimerProvider, { QuizTimerContext } from '../contexts/TimerContext';
 
 export default function QuizHeader({title,submit=false}) {
+
+ 
+  const { isRunning, setIsRunning } = useContext(QuizTimerContext);
   return (
     <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 shadow-sm rounded-lg">
       <div className="flex items-center gap-2">
         <button
           className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
           onClick={() => {
-            history.back();
+            history.back()
+            setIsRunning(false)
+
           }}
         >
           <ArrowLeft

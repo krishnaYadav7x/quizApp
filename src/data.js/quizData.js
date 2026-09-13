@@ -171,6 +171,7 @@ export const questions = {
     options: ["20 W", "30 W", "40 W", "60 W"],
     answer: "30 W",
   },
+ 
 ],
 };
 

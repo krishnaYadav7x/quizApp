@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router';
-import { questions } from '../data.js/quizData';
-
+import React, { useContext } from "react";
+import { Link } from "react-router";
+import { questions } from "../data.js/quizData";
+import  { QuizTimerContext } from "../contexts/TimerContext";
 
 export default function QuizFooter({
   index,
@@ -12,8 +12,9 @@ export default function QuizFooter({
   leftButton,
   handleNextBtnClick,
   handlePreviousBtnClick,
-})  {
-  console.log(quizCategory);
+}) {
+  const { handleStartTime,isRunning,setIsRunning } = useContext(QuizTimerContext);
+
   return (
     <div className="mt-auto mb-2 flex justify-between rounded-full bg-slate-800 px-4 py-3 shadow-md">
       {isLink ? (
@@ -22,14 +23,23 @@ export default function QuizFooter({
         </div>
       ) : (
         <button
-          onClick={handlePreviousBtnClick} disabled={index===0}
-          className="cursor-pointer rounded-lg bg-gray-400 px-4 py-2 text-white"
+          onClick={handlePreviousBtnClick}
+          disabled={index === 0}
+          className={`rounded-lg px-4 py-2 font-medium transition-all duration-200 ${
+            index === 0
+              ? "cursor-not-allowed bg-slate-200 text-slate-400"
+              : "cursor-pointer bg-slate-100 text-slate-700 shadow-sm hover:bg-white hover:shadow"
+          }`}
         >
           {leftButton}
         </button>
       )}
       {isLink ? (
         <Link
+          onClick={()=>{
+            handleStartTime()
+            setIsRunning(true)
+          }}
           to={`/QuizAttempt/${quizCategory}`}
           className="cursor-pointer rounded-full bg-indigo-500 px-6 py-2 text-[18px] font-semibold text-white shadow-sm hover:bg-indigo-600"
         >
@@ -37,9 +47,16 @@ export default function QuizFooter({
         </Link>
       ) : (
         <button
-        disabled = {index===questions[quizCategory].length-1}
-          onClick={handleNextBtnClick}
-          className="cursor-pointer rounded-lg bg-indigo-500 px-4 py-2 text-white"
+          disabled={index === questions[quizCategory].length - 1}
+          onClick={()=>{
+            handleNextBtnClick()
+            setIsRunning(true)
+          }}
+          className={`rounded-lg px-4 py-2 text-white ${
+            index === questions[quizCategory].length - 1
+              ? "cursor-not-allowed bg-gray-300 text-gray-500"
+              : "cursor-pointer bg-indigo-500 hover:bg-indigo-600"
+          }`}
         >
           {buttonName}
         </button>
