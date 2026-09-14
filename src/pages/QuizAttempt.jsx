@@ -4,37 +4,48 @@ import QuizHeader from "../components/QuizHeader";
 import QuizFooter from "../components/QuizFooter";
 import { Clock12Icon } from "lucide-react";
 import { questions } from "../data.js/quizData";
-import { quizTimer } from "../data.js/quizTimer";
-import { QuizTimerContext } from "../contexts/TimerContext";
+import { TimerContext } from "../contexts/TimerContext";
+import { remainingTime } from "../contexts/TimerContext";
 
 export default function QuizAttempt() {
   const { quizCategory } = useParams();
   const [index, setIndex] = useState(0);
-  const { startTimer, setStartTimer, handleStartTime } =
-    useContext(QuizTimerContext);
-  console.log(startTimer);
+  const {
+    startTimer,
+    setStartTimer,
+    timeRunning,
+    setTimeRunning,
+    count,
+    setCount,
+  } = useContext(TimerContext);
 
   const handleNextBtnClick = () => {
     setIndex((prev) => prev + 1);
-    handleStartTime();
+    setStartTimer(remainingTime)
+    setCount((prev)=>prev+1)
   };
+
+  // useEffect(() => {
+  //   setStartTimer((prev) => {
+  //     if (prev !== 0) return;
+  //   });
+  //   setIndex((prev) => prev + 1);
+  //   setStartTimer(remainingTime);
+  //   setCount((prev) => prev + 1);
+  // }, [startTimer]);
+
+  const handleBack = ()=>{
+    setTimeRunning(false)
+  }
+   
 
   const handlePreviousBtnClick = () => {
     setIndex((prev) => prev - 1);
-    handleStartTime();
   };
-
-  useEffect(() => {
-    if (index === questions[quizCategory].length - 1) return;
-    if (startTimer === 0) {
-      setIndex((prev) => prev + 1);
-      handleStartTime();
-    }
-  }, [startTimer]);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-[800px] flex-col bg-white">
-      <QuizHeader title="Quiz" submit={true} />
+      <QuizHeader title="Quiz" submit={true} handleBack={handleBack} />
 
       <main className="flex flex-1 flex-col gap-8 px-4 py-5">
         <div className="space-y-4">
@@ -49,20 +60,18 @@ export default function QuizAttempt() {
 
             <p className="flex items-center gap-1.5 text-sm font-semibold text-slate-600">
               <Clock12Icon size={18} />
-              <span>00:{startTimer ?? 10}</span>
+              <span>00: {startTimer}</span>
             </p>
           </div>
 
           <div className="h-2.5 overflow-hidden rounded-full bg-slate-200">
             <div
-              className={`h-full w-full origin-left bg-indigo-500 ${
-                startTimer === 10
-                  ? ""
-                  : "transition-transform duration-1000 ease-linear"
-              }`}
-              style={{
-                transform: `scaleX(${(10 - startTimer) / 10})`,
-              }}
+              className={`h-full w-full origin-left bg-indigo-500`}
+              style={
+                {
+                  // transform: `scaleX(${(10 - startTimer) / 10})`,
+                }
+              }
             />
           </div>
 
@@ -104,8 +113,8 @@ export default function QuizAttempt() {
           isLink={false}
           buttonName="Next"
           leftButton="Previous"
-          handleNextBtnClick={handleNextBtnClick}
-          handlePreviousBtnClick={handlePreviousBtnClick}
+          handleNextClick={handleNextBtnClick}
+          handlePrevClick={handlePreviousBtnClick}
           index={index}
           quizCategory={quizCategory}
         />

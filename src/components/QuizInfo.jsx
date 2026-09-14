@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import QuizHeader from './QuizHeader'
 import { useParams } from 'react-router';
 const mathImg = new URL("../assets/math.png", import.meta.url).href;
 import { quizImages } from '../data.js/quizData';
 import { instructions } from '../data.js/quizData';
 import QuizFooter from './QuizFooter';
+import { TimerContext } from '../contexts/TimerContext';
 
 export default function QuizInfo() {
   const { quizCategory } = useParams();
-  console.log(quizImages);
+  const { timeRunning, setTimeRunning, setStartTimer } =
+    useContext(TimerContext);
+
+  const handleStartQuiz = ()=>{
+    setStartTimer(10);
+    setTimeRunning(true)
+  }
+ 
+  
   
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-col bg-white">
@@ -62,6 +71,7 @@ export default function QuizInfo() {
         buttonName={"Start Quiz"}
         quizCategory={quizCategory}
         isLink={true}
+        handleStartQuiz={handleStartQuiz}
       />
     </div>
   );

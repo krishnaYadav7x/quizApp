@@ -1,19 +1,21 @@
 import React, { useContext } from "react";
 import { Link } from "react-router";
 import { questions } from "../data.js/quizData";
-import  { QuizTimerContext } from "../contexts/TimerContext";
+
 
 export default function QuizFooter({
   index,
   time,
   buttonName,
   quizCategory,
-  isLink,
+  isLink=false,
   leftButton,
-  handleNextBtnClick,
-  handlePreviousBtnClick,
+  handleStartQuiz,
+  handleNextClick,
+  handlePrevClick,
+
 }) {
-  const { handleStartTime,isRunning,setIsRunning } = useContext(QuizTimerContext);
+
 
   return (
     <div className="mt-auto mb-2 flex justify-between rounded-full bg-slate-800 px-4 py-3 shadow-md">
@@ -23,7 +25,9 @@ export default function QuizFooter({
         </div>
       ) : (
         <button
-          onClick={handlePreviousBtnClick}
+          onClick={() => {
+            handlePrevClick();
+          }}
           disabled={index === 0}
           className={`rounded-lg px-4 py-2 font-medium transition-all duration-200 ${
             index === 0
@@ -36,10 +40,7 @@ export default function QuizFooter({
       )}
       {isLink ? (
         <Link
-          onClick={()=>{
-            handleStartTime()
-            setIsRunning(true)
-          }}
+          onClick={handleStartQuiz}
           to={`/QuizAttempt/${quizCategory}`}
           className="cursor-pointer rounded-full bg-indigo-500 px-6 py-2 text-[18px] font-semibold text-white shadow-sm hover:bg-indigo-600"
         >
@@ -48,9 +49,8 @@ export default function QuizFooter({
       ) : (
         <button
           disabled={index === questions[quizCategory].length - 1}
-          onClick={()=>{
-            handleNextBtnClick()
-            setIsRunning(true)
+          onClick={() => {
+            handleNextClick();
           }}
           className={`rounded-lg px-4 py-2 text-white ${
             index === questions[quizCategory].length - 1

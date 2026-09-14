@@ -1,43 +1,42 @@
-import React, {  createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
-export const QuizTimerContext = createContext();
+export const TimerContext = createContext();
+export const remainingTime = 10;
 
 export default function TimerProvider({ children }) {
-  const [startTimer, setStartTimer] = useState(null);
-  const [isRunning,setIsRunning] = useState(false)
-  
+  const [startTimer, setStartTimer] = useState(remainingTime);
 
-  function handleStartTime() {
-    setStartTimer(10);
-  }
+  const [timeRunning, setTimeRunning] = useState(false);
+  const [count,setCount] = useState(0)
+ 
 
-
-    useEffect(() => {
-      if(!isRunning) return
-      if (startTimer === null) return;
-      const intervalId = setInterval(() => {
-        setStartTimer((prev) => {
-          if (prev === 0) {
-            clearInterval(intervalId);
-            setIsRunning(false)
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-
-      return () => {
-        console.log("unmount");
-        clearInterval(intervalId);
-      };
-    }, [isRunning]);
-
+  useEffect(() => {
+    if (!timeRunning) return;
+    const intervalId = setInterval(() => {
+      console.log(startTimer);
+      setStartTimer((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalId);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, [timeRunning,count]);
 
   return (
-    <QuizTimerContext.Provider
-      value={{ startTimer, setStartTimer, handleStartTime, isRunning ,setIsRunning}}
+    <TimerContext.Provider
+      value={{
+        startTimer,
+        setStartTimer,
+        count,setCount,
+        timeRunning,
+        setTimeRunning,
+      
+      }}
     >
       {children}
-    </QuizTimerContext.Provider>
+    </TimerContext.Provider>
   );
 }
