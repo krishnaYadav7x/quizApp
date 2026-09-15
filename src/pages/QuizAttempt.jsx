@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import QuizHeader from "../components/QuizHeader";
 import QuizFooter from "../components/QuizFooter";
@@ -10,6 +10,9 @@ import { remainingTime } from "../contexts/TimerContext";
 export default function QuizAttempt() {
   const { quizCategory } = useParams();
   const [index, setIndex] = useState(0);
+  const [optionSelected,setOptionSelected] = useState(null)
+  const [marked,setMarked] = useState(false)
+ console.log(optionSelected);
   const {
     startTimer,
     setStartTimer,
@@ -19,28 +22,32 @@ export default function QuizAttempt() {
     setCount,
   } = useContext(TimerContext);
 
+
+
   const handleNextBtnClick = () => {
     setIndex((prev) => prev + 1);
-    setStartTimer(remainingTime)
-    setCount((prev)=>prev+1)
+    setStartTimer(remainingTime);
+    setTimeRunning(true);
+    setCount((prev) => prev + 1);
+    setMarked(false)
   };
 
-  // useEffect(() => {
-  //   setStartTimer((prev) => {
-  //     if (prev !== 0) return;
-  //   });
-  //   setIndex((prev) => prev + 1);
-  //   setStartTimer(remainingTime);
-  //   setCount((prev) => prev + 1);
-  // }, [startTimer]);
+  useEffect(() => {
+    if (startTimer !== 0 || index === questions[quizCategory].length - 1)
+      return;
+    setIndex((prev) => prev + 1);
+    setStartTimer(remainingTime);
+    setCount((prev) => prev + 1);
+  }, [startTimer]);
 
-  const handleBack = ()=>{
-    setTimeRunning(false)
-  }
-   
+  const handleBack = () => {
+    setTimeRunning(false);
+  };
 
   const handlePreviousBtnClick = () => {
     setIndex((prev) => prev - 1);
+    setStartTimer(remainingTime);
+    setCount((prev) => prev - 1);
   };
 
   return (
@@ -67,11 +74,9 @@ export default function QuizAttempt() {
           <div className="h-2.5 overflow-hidden rounded-full bg-slate-200">
             <div
               className={`h-full w-full origin-left bg-indigo-500`}
-              style={
-                {
-                  // transform: `scaleX(${(10 - startTimer) / 10})`,
-                }
-              }
+              style={{
+                transform: `scaleX(${(remainingTime - startTimer) / remainingTime})`,
+              }}
             />
           </div>
 
@@ -90,14 +95,32 @@ export default function QuizAttempt() {
           </p>
 
           <ul className="flex flex-col gap-3">
-            {questions[quizCategory][index].options.map((option, id) => {
+            {questions[quizCategory][index].options.map((option, i) => {
               return (
                 <li
-                  key={id}
-                  className="cursor-pointer rounded-xl border border-slate-200 bg-white px-5 py-4 text-[15px] font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md"
+                  onClick={() => {
+                    setOptionSelected(option);
+                    setMarked(true);
+                    setTimeRunning(false);
+                  }}
+                  key={i}
+                  className={`cursor-pointer rounded-xl border px-5 py-4 text-[15px] font-medium shadow-sm transition-all duration-200 ${
+                    marked
+                      ? option === questions[quizCategory][index].answer
+                        ? "border-emerald-500 bg-emerald-50 text-emerald-800"
+                        : optionSelected === option
+                          ? "border-rose-500 bg-rose-50 text-rose-800"
+                          : "border-slate-200 bg-white text-slate-700"
+                      : optionSelected === option
+                        ? optionSelected ===
+                          questions[quizCategory][index].answer
+                          ? "border-emerald-500 bg-emerald-50 text-emerald-800"
+                          : "border-rose-500 bg-rose-50 text-rose-800"
+                        : "border-slate-200 bg-white text-slate-700 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md"
+                  }`}
                 >
                   <span className="mr-2 font-bold text-indigo-500">
-                    {String.fromCharCode(65 + id)}.
+                    {String.fromCharCode(65 + i)}.
                   </span>
 
                   {option}

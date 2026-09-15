@@ -13,7 +13,7 @@ export default function TimerProvider({ children }) {
   useEffect(() => {
     if (!timeRunning) return;
     const intervalId = setInterval(() => {
-      console.log(startTimer);
+
       setStartTimer((prev) => {
         if (prev <= 1) {
           clearInterval(intervalId);
