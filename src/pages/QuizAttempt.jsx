@@ -6,16 +6,17 @@ import { Clock12Icon } from "lucide-react";
 import { questions } from "../data.js/quizData";
 import { TimerContext } from "../contexts/TimerContext";
 import { remainingTime } from "../contexts/TimerContext";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export default function QuizAttempt() {
   const { quizCategory } = useParams();
-  const [index, setIndex] = useState(0);
-  const [optionSelected, setOptionSelected] = useState(null);
+  const [index, setIndex] = useLocalStorage("index", 0);
+  const [optionSelected, setOptionSelected] = useLocalStorage('optionSelected',null);
 
-  const [marked, setMarked] = useState(false);
-  const [isTrue, setIsTrue] = useState({});
+  const [marked, setMarked] = useLocalStorage('marked',false);
+  const [isTrue, setIsTrue] = useLocalStorage('isTrue',{});
   console.log(isTrue);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useLocalStorage("score", 0);
    
   const {
     startTimer,
@@ -26,12 +27,12 @@ export default function QuizAttempt() {
     setCount,
   } = useContext(TimerContext);
 
-  useEffect(()=>{
-    if(index===0){
-      setStartTimer(10);
-      setTimeRunning(true);
-    }
-  },[])
+  // useEffect(()=>{
+  //   if(index || index===0){
+  //     setStartTimer(10);
+  //     setTimeRunning(true);
+  //   }
+  // },[])
   const handleNextBtnClick = () => {
     setIndex((prev) => prev + 1);
     setStartTimer(remainingTime);
@@ -85,6 +86,9 @@ export default function QuizAttempt() {
       });
     }
   };
+  // const clearLocalStorageData = ()=>{
+  //   localStorage.clear();
+  // }
 
   return (
     <div className="mx-auto flex min-h-screen max-w-[800px] flex-col bg-white">
@@ -93,6 +97,7 @@ export default function QuizAttempt() {
         score={true}
         handleBack={handleBack}
         totalScore={score}
+        // clearLocalStorageData={clearLocalStorageData}
       />
 
       <main className="flex flex-1 flex-col gap-8 px-4 py-5">

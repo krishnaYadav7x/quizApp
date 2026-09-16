@@ -2,7 +2,13 @@ import { ArrowLeft } from 'lucide-react'
 
 
 
-export default function QuizHeader({ title, score = false, handleBack ,totalScore}) {
+export default function QuizHeader({
+  title,
+  score = false,
+  handleBack,
+  totalScore,
+  // clearLocalStorageData,
+}) {
   return (
     <header className="flex items-center justify-between rounded-lg border-b border-slate-200 bg-white px-4 py-3 shadow-sm">
       <div className="flex items-center gap-2">
@@ -11,6 +17,7 @@ export default function QuizHeader({ title, score = false, handleBack ,totalScor
           onClick={() => {
             history.back();
             handleBack();
+            localStorage.clear();
           }}
         >
           <ArrowLeft

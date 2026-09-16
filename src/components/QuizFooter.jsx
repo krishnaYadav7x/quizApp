@@ -10,7 +10,7 @@ export default function QuizFooter({
   quizCategory,
   isLink=false,
   leftButton,
-  
+  handleStartTimer,
   handleNextClick,
   handlePrevClick,
 
@@ -40,7 +40,7 @@ export default function QuizFooter({
       )}
       {isLink ? (
         <Link
-          
+          onClick={handleStartTimer}
           to={`/QuizAttempt/${quizCategory}`}
           className="cursor-pointer rounded-full bg-indigo-500 px-6 py-2 text-[18px] font-semibold text-white shadow-sm hover:bg-indigo-600"
         >

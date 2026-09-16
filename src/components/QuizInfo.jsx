@@ -6,13 +6,17 @@ import { quizImages } from '../data.js/quizData';
 import { instructions } from '../data.js/quizData';
 import QuizFooter from './QuizFooter';
 import { TimerContext } from '../contexts/TimerContext';
+import { remainingTime } from '../contexts/TimerContext';
 
 export default function QuizInfo() {
   const { quizCategory } = useParams();
   const { timeRunning, setTimeRunning, setStartTimer } =
     useContext(TimerContext);
 
-  
+  const handleStartTimer = ()=>{
+        setStartTimer(remainingTime);
+        setTimeRunning(true);
+  }
  
   const handleBack = ()=>{
     return history.back()
@@ -45,7 +49,7 @@ export default function QuizInfo() {
           <p className="my-4">
             <span>Total Time</span>{" "}
             <span className="rounded-full bg-indigo-50 px-3 py-1.5 text-sm font-semibold text-indigo-600">
-              10 min
+              5 min
             </span>
           </p>
           <div>
@@ -66,11 +70,11 @@ export default function QuizInfo() {
         </div>
       </main>
       <QuizFooter
-        time={"15:00 min"}
+        time={"5:00 min"}
         buttonName={"Start Quiz"}
         quizCategory={quizCategory}
         isLink={true}
-        
+        handleStartTimer={handleStartTimer}
       />
     </div>
   );
