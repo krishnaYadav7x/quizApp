@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import QuizHeader from "../components/QuizHeader";
 import QuizFooter from "../components/QuizFooter";
@@ -10,9 +10,13 @@ import { remainingTime } from "../contexts/TimerContext";
 export default function QuizAttempt() {
   const { quizCategory } = useParams();
   const [index, setIndex] = useState(0);
-  const [optionSelected,setOptionSelected] = useState(null)
-  const [marked,setMarked] = useState(false)
- console.log(optionSelected);
+  const [optionSelected, setOptionSelected] = useState(null);
+
+  const [marked, setMarked] = useState(false);
+  const [isTrue, setIsTrue] = useState({});
+  console.log(isTrue);
+  const [score, setScore] = useState(0);
+   
   const {
     startTimer,
     setStartTimer,
@@ -22,14 +26,19 @@ export default function QuizAttempt() {
     setCount,
   } = useContext(TimerContext);
 
-
-
+  useEffect(()=>{
+    if(index===0){
+      setStartTimer(10);
+      setTimeRunning(true);
+    }
+  },[])
   const handleNextBtnClick = () => {
     setIndex((prev) => prev + 1);
     setStartTimer(remainingTime);
     setTimeRunning(true);
     setCount((prev) => prev + 1);
-    setMarked(false)
+    setMarked(false);
+    setOptionSelected(null);
   };
 
   useEffect(() => {
@@ -47,12 +56,44 @@ export default function QuizAttempt() {
   const handlePreviousBtnClick = () => {
     setIndex((prev) => prev - 1);
     setStartTimer(remainingTime);
+    setTimeRunning(true);
     setCount((prev) => prev - 1);
+    setMarked(false);
+    setOptionSelected(null);
+   if(isTrue[index]&&isTrue[index-1]){
+    setScore((prev)=>prev-2)
+    setIsTrue((prev) => {
+      return { ...prev, [index]: null, [index-1]:null };
+    });
+   }else if(isTrue[index]||isTrue[index-1]){
+    setScore((prev) => prev - 1);
+    setIsTrue((prev) => {
+      return { ...prev, [index]: null, [index - 1]: null };
+    });
+   }
+  };
+
+  const correctOptionTracker = (option) => {
+    if (option === questions[quizCategory][index].answer) {
+      setScore((prev) => prev + 1);
+      setIsTrue((prev)=>{
+        return { ...prev, [index]: true };
+      });
+    } else {
+      setIsTrue((prev) => {
+        return { ...prev, [index]: false };
+      });
+    }
   };
 
   return (
     <div className="mx-auto flex min-h-screen max-w-[800px] flex-col bg-white">
-      <QuizHeader title="Quiz" submit={true} handleBack={handleBack} />
+      <QuizHeader
+        title="Quiz"
+        score={true}
+        handleBack={handleBack}
+        totalScore={score}
+      />
 
       <main className="flex flex-1 flex-col gap-8 px-4 py-5">
         <div className="space-y-4">
@@ -102,28 +143,32 @@ export default function QuizAttempt() {
                     setOptionSelected(option);
                     setMarked(true);
                     setTimeRunning(false);
+                    correctOptionTracker(option);
                   }}
                   key={i}
-                  className={`cursor-pointer rounded-xl border px-5 py-4 text-[15px] font-medium shadow-sm transition-all duration-200 ${
-                    marked
-                      ? option === questions[quizCategory][index].answer
-                        ? "border-emerald-500 bg-emerald-50 text-emerald-800"
-                        : optionSelected === option
-                          ? "border-rose-500 bg-rose-50 text-rose-800"
-                          : "border-slate-200 bg-white text-slate-700"
-                      : optionSelected === option
-                        ? optionSelected ===
-                          questions[quizCategory][index].answer
-                          ? "border-emerald-500 bg-emerald-50 text-emerald-800"
-                          : "border-rose-500 bg-rose-50 text-rose-800"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md"
-                  }`}
+                  className={`${marked && "pointer-events-none"} flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 px-5 py-4 text-[15px] font-medium text-slate-700 shadow-sm transition-all duration-200 hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md ${optionSelected === option && optionSelected !== questions[quizCategory][index].answer ? "border-red-500 bg-red-50 text-red-700 shadow-md shadow-red-100" : ""} ${optionSelected === option && optionSelected === questions[quizCategory][index].answer ? "border-emerald-500 bg-emerald-50 text-emerald-700 shadow-md shadow-emerald-100" : ""} ${marked && option === questions[quizCategory][index].answer ? "border-emerald-500 bg-emerald-50 text-emerald-700 shadow-md shadow-emerald-100" : ""}`}
                 >
-                  <span className="mr-2 font-bold text-indigo-500">
-                    {String.fromCharCode(65 + i)}.
-                  </span>
+                  <div>
+                    <span className="mr-2 font-bold text-indigo-500">
+                      {String.fromCharCode(65 + i)}.
+                    </span>
 
-                  {option}
+                    {option}
+                  </div>
+                  {(optionSelected === option &&
+                    optionSelected !==
+                      questions[quizCategory][index].answer && (
+                      <div>You chose</div>
+                    )) ||
+                    (optionSelected === option &&
+                      optionSelected ===
+                        questions[quizCategory][index].answer && (
+                        <div>Right</div>
+                      )) ||
+                    (marked &&
+                      option === questions[quizCategory][index].answer && (
+                        <div>Right</div>
+                      ))}
                 </li>
               );
             })}

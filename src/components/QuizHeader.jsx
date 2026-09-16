@@ -2,7 +2,7 @@ import { ArrowLeft } from 'lucide-react'
 
 
 
-export default function QuizHeader({ title, submit = false, handleBack }) {
+export default function QuizHeader({ title, score = false, handleBack ,totalScore}) {
   return (
     <header className="flex items-center justify-between rounded-lg border-b border-slate-200 bg-white px-4 py-3 shadow-sm">
       <div className="flex items-center gap-2">
@@ -10,7 +10,7 @@ export default function QuizHeader({ title, submit = false, handleBack }) {
           className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
           onClick={() => {
             history.back();
-            handleBack()
+            handleBack();
           }}
         >
           <ArrowLeft
@@ -21,10 +21,11 @@ export default function QuizHeader({ title, submit = false, handleBack }) {
         </button>
         <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
       </div>
-      {submit && (
-        <button className="cursor-pointer rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-600">
-          Submit
-        </button>
+      {score && (
+        <div className="rounded-lg bg-indigo-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-600">
+          <span>Correct: </span>
+          <span>{totalScore}</span>
+        </div>
       )}
     </header>
   );

@@ -21,7 +21,6 @@ export const instructions = {
 
 export const questions = {
   Math: [
-    
     {
       id: 1,
       question: "If x + 1/x = 5, where x ≠ 0, what is the value of x² + 1/x²?",
@@ -101,78 +100,77 @@ export const questions = {
     },
   ],
   Physics: [
-  {
-    id: 1,
-    question:
-      "A car accelerates uniformly from 10 m/s to 30 m/s in 5 seconds. What is its acceleration?",
-    options: ["2 m/s²", "4 m/s²", "5 m/s²", "6 m/s²"],
-    answer: "4 m/s²",
-  },
-  {
-    id: 2,
-    question:
-      "A force of 20 N acts on an object of mass 5 kg. What acceleration is produced?",
-    options: ["2 m/s²", "4 m/s²", "5 m/s²", "10 m/s²"],
-    answer: "4 m/s²",
-  },
-  {
-    id: 3,
-    question:
-      "A body of mass 2 kg is moving with a velocity of 6 m/s. What is its kinetic energy?",
-    options: ["18 J", "24 J", "36 J", "72 J"],
-    answer: "36 J",
-  },
-  {
-    id: 4,
-    question:
-      "A 10 kg object is lifted to a height of 5 m. Taking g = 10 m/s², what is its gravitational potential energy?",
-    options: ["50 J", "100 J", "500 J", "1000 J"],
-    answer: "500 J",
-  },
-  {
-    id: 5,
-    question:
-      "A wave has a frequency of 50 Hz and a wavelength of 4 m. What is its speed?",
-    options: ["12.5 m/s", "100 m/s", "200 m/s", "250 m/s"],
-    answer: "200 m/s",
-  },
-  {
-    id: 6,
-    question:
-      "An electric current of 2 A flows through a resistor of 6 Ω. What is the potential difference across the resistor?",
-    options: ["3 V", "8 V", "12 V", "18 V"],
-    answer: "12 V",
-  },
-  {
-    id: 7,
-    question:
-      "A bulb operates at 220 V and draws a current of 0.5 A. What is its power?",
-    options: ["55 W", "110 W", "220 W", "440 W"],
-    answer: "110 W",
-  },
-  {
-    id: 8,
-    question:
-      "A projectile is thrown vertically upward with an initial velocity of 20 m/s. Taking g = 10 m/s², what maximum height will it reach?",
-    options: ["10 m", "20 m", "30 m", "40 m"],
-    answer: "20 m",
-  },
-  {
-    id: 9,
-    question:
-      "A 5 kg object is moving at 4 m/s. What is the magnitude of its momentum?",
-    options: ["5 kg·m/s", "10 kg·m/s", "20 kg·m/s", "25 kg·m/s"],
-    answer: "20 kg·m/s",
-  },
-  {
-    id: 10,
-    question:
-      "A machine does 600 J of work in 20 seconds. What is its power?",
-    options: ["20 W", "30 W", "40 W", "60 W"],
-    answer: "30 W",
-  },
- 
-],
+    {
+      id: 1,
+      question:
+        "A car accelerates uniformly from 10 m/s to 30 m/s in 5 seconds. What is its acceleration?",
+      options: ["2 m/s²", "4 m/s²", "5 m/s²", "6 m/s²"],
+      answer: "4 m/s²",
+    },
+    {
+      id: 2,
+      question:
+        "A car increases its velocity from 10 m/s to 20 m/s in 5 seconds. What is its acceleration?",
+      options: ["1 m/s²", "2 m/s²", "3 m/s²", "4 m/s²"],
+      answer: "2 m/s²",
+    },
+    {
+      id: 3,
+      question:
+        "A body of mass 2 kg is moving with a velocity of 6 m/s. What is its kinetic energy?",
+      options: ["18 J", "24 J", "36 J", "72 J"],
+      answer: "36 J",
+    },
+    {
+      id: 4,
+      question:
+        "A 10 kg object is lifted to a height of 5 m. Taking g = 10 m/s², what is its gravitational potential energy?",
+      options: ["50 J", "100 J", "500 J", "1000 J"],
+      answer: "500 J",
+    },
+    {
+      id: 5,
+      question:
+        "A wave has a frequency of 50 Hz and a wavelength of 4 m. What is its speed?",
+      options: ["12.5 m/s", "100 m/s", "200 m/s", "250 m/s"],
+      answer: "200 m/s",
+    },
+    {
+      id: 6,
+      question:
+        "An electric current of 2 A flows through a resistor of 6 Ω. What is the potential difference across the resistor?",
+      options: ["3 V", "8 V", "12 V", "18 V"],
+      answer: "12 V",
+    },
+    {
+      id: 7,
+      question:
+        "A bulb operates at 220 V and draws a current of 0.5 A. What is its power?",
+      options: ["55 W", "110 W", "220 W", "440 W"],
+      answer: "110 W",
+    },
+    {
+      id: 8,
+      question:
+        "A projectile is thrown vertically upward with an initial velocity of 20 m/s. Taking g = 10 m/s², what maximum height will it reach?",
+      options: ["10 m", "20 m", "30 m", "40 m"],
+      answer: "20 m",
+    },
+    {
+      id: 9,
+      question:
+        "A 5 kg object is moving at 4 m/s. What is the magnitude of its momentum?",
+      options: ["5 kg·m/s", "10 kg·m/s", "20 kg·m/s", "25 kg·m/s"],
+      answer: "20 kg·m/s",
+    },
+    {
+      id: 10,
+      question:
+        "A machine does 600 J of work in 20 seconds. What is its power?",
+      options: ["20 W", "30 W", "40 W", "60 W"],
+      answer: "30 W",
+    },
+  ],
 };
 
 
