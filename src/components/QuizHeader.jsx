@@ -1,4 +1,5 @@
 import { ArrowLeft } from 'lucide-react'
+import { Link } from 'react-router';
 
 
 
@@ -7,16 +8,19 @@ export default function QuizHeader({
   score = false,
   handleBack,
   totalScore,
-  // clearLocalStorageData,
+  quizCategory,
+  type,
+  
+  
 }) {
   return (
     <header className="flex items-center justify-between rounded-lg border-b border-slate-200 bg-white px-4 py-3 shadow-sm">
       <div className="flex items-center gap-2">
-        <button
+        <Link
+          to={type === "quizInfo" ? "/quizzes" : `/quizDetails/${quizCategory}`}
           className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
           onClick={() => {
-            history.back();
-            handleBack();
+            
             localStorage.clear();
           }}
         >
@@ -25,7 +29,7 @@ export default function QuizHeader({
             size={30}
             strokeWidth={2}
           />
-        </button>
+        </Link>
         <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
       </div>
       {score && (

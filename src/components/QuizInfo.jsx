@@ -24,7 +24,13 @@ export default function QuizInfo() {
   
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[800px] flex-col bg-white">
-      <QuizHeader title={"Start Quiz"} submit={false} handleBack={handleBack} />
+      <QuizHeader
+        title={"Start Quiz"}
+        submit={false}
+        handleBack={handleBack}
+        
+        type={'quizInfo'}
+      />
       <main className="flex-1 space-y-7 pt-8 pb-6">
         <p className="mt-1.5 px-4 text-sm leading-6 text-slate-600">
           Put your understanding of this concept to test by answering a few

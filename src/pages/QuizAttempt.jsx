@@ -90,7 +90,7 @@ export default function QuizAttempt() {
         score={true}
         handleBack={handleBack}
         totalScore={score}
-        
+        quizCategory={quizCategory}
       />
 
       <main className="flex flex-1 flex-col gap-8 px-4 py-5">
@@ -183,7 +183,7 @@ export default function QuizAttempt() {
           handlePrevClick={handlePreviousBtnClick}
           index={index}
           quizCategory={quizCategory}
-         
+          data={{ score, questions, quizCategory }}
         />
       </div>
     </div>

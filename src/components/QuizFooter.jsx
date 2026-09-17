@@ -13,6 +13,7 @@ export default function QuizFooter({
   handleStartTimer,
   handleNextClick,
   handlePrevClick,
+  data
 
 }) {
 
@@ -47,7 +48,7 @@ export default function QuizFooter({
           {buttonName}
         </Link>
       ) : index === questions[quizCategory].length - 1 ? (
-        <Link to={'/result'} className="rounded-md bg-emerald-500 px-5 py-2 font-medium text-white shadow-sm transition hover:bg-emerald-600 active:scale-95">
+        <Link state={data} to={'/result'} className="rounded-md bg-emerald-500 px-5 py-2 font-medium text-white shadow-sm transition hover:bg-emerald-600 active:scale-95">
           Result
         </Link>
       ) : (
