@@ -16,10 +16,13 @@ export default function Quizzes() {
         Quizzes
       </h1>
       <div
-        className="flex w-full max-w-20 cursor-pointer items-center gap-1 rounded-lg border px-2 py-1"
+        className="group flex w-fit cursor-pointer items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3.5 py-2 text-sm font-medium text-gray-600 transition-all hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
         onClick={() => history.back()}
       >
-        <ArrowLeft size={30} />
+        <ArrowLeft
+          size={18}
+          className="transition-transform group-hover:-translate-x-1"
+        />
         Back
       </div>
       <h2 className="text-2xl sm:text-center">Explore quizzes</h2>
