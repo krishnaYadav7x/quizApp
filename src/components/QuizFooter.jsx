@@ -1,22 +1,22 @@
 import React, { useContext } from "react";
 import { Link } from "react-router";
 import { questions } from "../data.js/quizData";
-
+import { TimerContext } from "../contexts/TimerContext";
 
 export default function QuizFooter({
   index,
   time,
   buttonName,
   quizCategory,
-  isLink=false,
+  isLink = false,
   leftButton,
   handleStartTimer,
   handleNextClick,
   handlePrevClick,
-  data
-
+  data,
+  setTimeRunning,
 }) {
-
+  const { isDark } = useContext(TimerContext);
 
   return (
     <div className="mt-auto mb-2 flex justify-between rounded-full bg-slate-800 px-4 py-3 shadow-md">
@@ -48,7 +48,12 @@ export default function QuizFooter({
           {buttonName}
         </Link>
       ) : index === questions[quizCategory].length - 1 ? (
-        <Link state={data} to={'/result'} className="rounded-md bg-emerald-500 px-5 py-2 font-medium text-white shadow-sm transition hover:bg-emerald-600 active:scale-95">
+        <Link
+          onClick={() => setTimeRunning(false)}
+          state={data}
+          to={"/result"}
+          className="rounded-md bg-emerald-500 px-5 py-2 font-medium text-white shadow-sm transition hover:bg-emerald-600 active:scale-95"
+        >
           Result
         </Link>
       ) : (

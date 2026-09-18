@@ -9,16 +9,23 @@ import {
 } from "lucide-react";
 import CategoryCard from "../components/CategoryCard";
 import { Link } from "react-router";
+import { TimerContext } from "../contexts/TimerContext";
+import { useContext } from "react";
 
 export default function Quizzes() {
+    const { isDark, setIsDark } = useContext(TimerContext);
   return (
-    <main className="space-y-8 px-4 py-2">
+    <main
+      className={`min-h-screen space-y-8 px-4 py-2 ${
+        isDark ? "bg-slate-950 text-slate-100" : "bg-white text-slate-900"
+      }`}
+    >
       <h1 className="text-center text-3xl font-extrabold tracking-wide">
         Quizzes
       </h1>
       <Link
         className="group flex w-fit cursor-pointer items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3.5 py-2 text-sm font-medium text-gray-600 transition-all hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
-        to={'/'}
+        to={"/"}
       >
         <ArrowLeft
           size={18}

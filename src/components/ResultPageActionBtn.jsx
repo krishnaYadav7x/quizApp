@@ -12,6 +12,7 @@ export default function ResultPageActionBtn({redirect,title,type}) {
           setStartTimer(remainingTime);
           setTimeRunning(true);
         }
+        // setTimeRunning(false)
         
       }}
       to={redirect}

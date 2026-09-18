@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
-export const TimerContext = createContext();
+export const TimerContext = createContext()
 export const remainingTime = 30;
 
 export default function TimerProvider({ children }) {
@@ -27,6 +27,8 @@ export default function TimerProvider({ children }) {
     }, 1000);
     return () => clearInterval(intervalId);
   }, [timeRunning, count, startTimer]);
+  
+  const [isDark,setIsDark] = useLocalStorage('isDark',false)
 
   return (
     <TimerContext.Provider
@@ -36,6 +38,8 @@ export default function TimerProvider({ children }) {
         count,setCount,
         timeRunning,
         setTimeRunning,
+        isDark,
+        setIsDark
       
       }}
     >

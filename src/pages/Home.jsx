@@ -1,19 +1,24 @@
 import { Moon } from "lucide-react";
+import { useContext } from "react";
 import { Link } from "react-router";
+import { TimerContext } from "../contexts/TimerContext";
 
 const imgUrl = new URL("../assets/logo.png", import.meta.url).href;
 
 export default function Home() {
-  // bg-[radial-gradient(circle_at_50%_35%,#312e81_0%,transparent_35%),linear-gradient(135deg,#0f172a,#1e1b4b)]
+  const { isDark, setIsDark } = useContext(TimerContext);
+
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_50%_30%,#c7d2fe_0%,transparent_38%),linear-gradient(135deg,#f8fafc,#eef2ff)] text-slate-900">
+    <div className={`min-h-screen ${isDark?'text-white bg-[radial-gradient(circle_at_50%_35%,#312e81_0%,transparent_35%),linear-gradient(135deg,#0f172a,#1e1b4b)]':'bg-[radial-gradient(circle_at_50%_30%,#c7d2fe_0%,transparent_38%),linear-gradient(135deg,#f8fafc,#eef2ff)]'} text-slate-900`}>
       <header className="px-4 py-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-2xl">
             <img src={imgUrl} alt={imgUrl} width={50} />
             <h1>Brainstorm</h1>
           </div>
-          <div className="flex cursor-pointer items-center gap-1 rounded border px-2 py-1">
+          <div onClick={()=>{
+            setIsDark(prev=>!prev)
+          }} className="flex cursor-pointer items-center gap-1 rounded border px-2 py-1">
             <Moon />
             Dark
           </div>
